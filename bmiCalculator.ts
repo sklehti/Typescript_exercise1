@@ -5,7 +5,11 @@ interface MultiplyValues {
   weight: number;
 }
 
-const parseArguments = (args: string[]): MultiplyValues => {
+interface AllValues extends MultiplyValues {
+  bmi: string;
+}
+
+export const parseArguments = (args: string[]): MultiplyValues => {
   if (args.length < 4) throw new Error("Not enough arguments");
   if (args.length > 4) throw new Error("Too many arguments");
 
@@ -19,23 +23,29 @@ const parseArguments = (args: string[]): MultiplyValues => {
   }
 };
 
-type Operation =
-  | "Underweight (unhealthy weight)"
-  | "Normal (healthy weight)"
-  | "Overweight (unhealthy weight)"
-  | "Something went wrong";
-
-const calculateBmi = (a: number, b: number): Operation => {
+export const calculateBmi = (a: number, b: number): AllValues => {
   if (a !== 0) {
     a = a / 100;
     const result: number = b / (a * a);
 
     if (result < 18.5) {
-      return "Underweight (unhealthy weight)";
+      return {
+        height: a,
+        weight: b,
+        bmi: "Underweight (unhealthy weight)",
+      };
     } else if (result >= 18.5 && result <= 24.9) {
-      return "Normal (healthy weight)";
+      return {
+        height: a,
+        weight: b,
+        bmi: "Normal (healthy weight)",
+      };
     } else {
-      return "Overweight (unhealthy weight)";
+      return {
+        height: a,
+        weight: b,
+        bmi: "Overweight (unhealthy weight)",
+      };
     }
   } else {
     throw new Error("Can't divide by 0!");

@@ -14,7 +14,9 @@ interface MultiplyCalculatorValues {
   value1: string[];
 }
 
-const parseCalculatorArguments = (args: string[]): MultiplyCalculatorValues => {
+export const parseCalculatorArguments = (
+  args: string[]
+): MultiplyCalculatorValues => {
   if (args.length < 3) throw new Error("Not enough arguments");
 
   return {
@@ -22,9 +24,7 @@ const parseCalculatorArguments = (args: string[]): MultiplyCalculatorValues => {
   };
 };
 
-type discription = "Working more" | "Good work" | "Excellent work!";
-
-const calculateExercises = (array: string[]): ResultValues => {
+export const calculateExercises = (array: string[]): ResultValues => {
   let newArray: number[] = [];
   let workingDays = 0;
 
@@ -39,11 +39,11 @@ const calculateExercises = (array: string[]): ResultValues => {
     }
   }
 
-  let hours: number = newArray.reduce((sum, a) => sum + a, 0);
-  let text: string = "";
-  let averageValue: number = 0;
-  let ratingValue: number = 0;
-  let succesValue: boolean = false;
+  const hours: number = newArray.reduce((sum, a) => sum + a, 0);
+  let text = "";
+  let averageValue = 0;
+  let ratingValue = 0;
+  let succesValue = false;
 
   averageValue = hours / newArray.length;
   averageValue = Math.round(averageValue);
@@ -81,6 +81,7 @@ const calculateExercises = (array: string[]): ResultValues => {
 
 try {
   const { value1 } = parseCalculatorArguments(process.argv);
+
   console.log(calculateExercises(value1));
 } catch (error: unknown) {
   let errorMessage = "Something went wrong: ";
